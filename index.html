@@ -2,59 +2,156 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0056b3">
-    <title>Pendamping Minum Obat</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#4F46E5">
+    <title>Pendamping Obat - Teman Sehatmu</title>
+    <!-- Google Fonts: Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #0056b3;
-            --primary-light: #e6f0fa;
-            --success: #28a745;
-            --success-light: #d4edda;
-            --warning: #fd7e14;
-            --danger: #dc3545;
-            --bg-color: #f8f9fa;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --white: #ffffff;
-            --font-base: 18px;
+            /* Palet Warna Milenial & Aksesibel */
+            --primary: #4F46E5; /* Indigo */
+            --primary-light: #EEF2FF;
+            --secondary: #10B981; /* Emerald/Mint */
+            --secondary-light: #ECFDF5;
+            --warning: #F59E0B; /* Amber */
+            --warning-light: #FFFBEB;
+            --danger: #EF4444; /* Red */
+            --danger-light: #FEF2F2;
+            
+            --bg-body: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            
+            --font-base: 16px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Nunito', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-body);
             color: var(--text-main);
             font-size: var(--font-base);
             display: flex;
             justify-content: center;
-            height: 100vh;
+            height: 100dvh; /* Fix untuk mobile browser bar */
             overflow: hidden;
         }
 
-        /* App Container (Mobile Frame) */
+        /* Container Utama (Mobile Frame) */
         .app-container {
             width: 100%;
             max-width: 480px;
-            background-color: var(--white);
-            height: 100vh;
+            background-color: var(--bg-body);
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
         }
+
+        /* ================= AUTH SCREEN (LOGIN/DAFTAR) ================= */
+        #auth-screen {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #818CF8 100%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 24px;
+            transition: opacity 0.3s ease;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            padding: 32px 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .auth-logo .material-icons-round {
+            font-size: 64px;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 16px;
+            border-radius: 50%;
+        }
+
+        .auth-card h2 { text-align: center; margin-bottom: 8px; font-weight: 800; }
+        .auth-card p { text-align: center; color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem; }
+
+        .input-group { margin-bottom: 16px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; }
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: transform 0.2s;
+        }
+        .btn-auth:active { transform: scale(0.98); }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .auth-toggle span { color: var(--primary); font-weight: bold; cursor: pointer; }
+
+        /* ================= MAIN APP ================= */
+        #app-screen {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        #app-screen.hidden { opacity: 0; pointer-events: none; }
 
         /* Header */
         header {
-            padding: 16px;
-            background-color: var(--white);
-            border-bottom: 1px solid #ddd;
+            padding: 20px 24px;
+            background-color: var(--bg-body);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -63,282 +160,264 @@
             z-index: 10;
         }
 
-        .header-title {
-            font-size: 1.2rem;
-            font-weight: bold;
+        .user-greeting { display: flex; align-items: center; gap: 12px; }
+        .avatar {
+            width: 48px; height: 48px;
+            background: var(--primary-light);
             color: var(--primary);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 24px; font-weight: 800;
         }
+        .greeting-text h2 { font-size: 1.1rem; font-weight: 800; line-height: 1.2; }
+        .greeting-text p { font-size: 0.85rem; color: var(--text-muted); }
 
         .offline-badge {
             background-color: var(--danger);
             color: var(--white);
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 0.8rem;
+            font-weight: bold;
             display: none;
         }
 
-        /* Main Content */
+        /* Main Content Scrollable */
         main {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
-            padding-bottom: 80px; /* Space for bottom nav */
+            padding: 0 24px 100px 24px; /* Padding bawah untuk nav */
+            scrollbar-width: none; /* Firefox */
         }
+        main::-webkit-scrollbar { display: none; } /* Chrome/Safari */
 
         .view-section {
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .view-section.active { display: block; }
 
-        .view-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Beranda */
-        .greeting h2 { font-size: 1.5rem; margin-bottom: 8px; }
-        .greeting p { color: var(--text-muted); margin-bottom: 24px; }
+        /* --- BERANDA --- */
+        .streak-card {
+            background: linear-gradient(135deg, var(--warning) 0%, #FCD34D 100%);
+            color: #78350F;
+            padding: 16px 20px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-soft);
+        }
+        .streak-info { display: flex; align-items: center; gap: 12px; }
+        .streak-info .material-icons-round { font-size: 36px; }
+        .streak-info h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: -4px; }
+        .streak-info p { font-size: 0.9rem; font-weight: 600; }
 
         .btn-primary {
-            background-color: var(--primary);
+            background: var(--primary);
             color: var(--white);
             border: none;
-            padding: 20px;
+            padding: 24px;
             font-size: 1.5rem;
-            font-weight: bold;
-            border-radius: 16px;
+            font-weight: 800;
+            border-radius: var(--radius-lg);
             width: 100%;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 86, 179, 0.3);
-            transition: transform 0.1s;
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+            transition: all 0.2s;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
         }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
+        .btn-primary:active { transform: translateY(2px); box-shadow: 0 4px 10px -5px rgba(79, 70, 229, 0.4); }
         .btn-primary.taken {
-            background-color: var(--success);
-            box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+            background: var(--secondary);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+        }
+        /* Animasi ripple click */
+        .btn-primary::after {
+            content: ""; position: absolute; top: 50%; left: 50%;
+            width: 5px; height: 5px; background: rgba(255,255,255,0.5);
+            opacity: 0; border-radius: 100%; transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .btn-primary:focus:not(:active)::after { animation: ripple 1s ease-out; }
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 0.5; }
+            20% { transform: scale(25, 25); opacity: 0.3; }
+            100% { opacity: 0; transform: scale(40, 40); }
         }
 
         /* Grid 14 Hari */
-        .dose-grid-container { margin-top: 32px; }
-        .dose-grid-container h3 { margin-bottom: 12px; font-size: 1.1rem; }
+        .dose-section { margin-top: 32px; }
+        .dose-section h3 { margin-bottom: 16px; font-size: 1.1rem; font-weight: 800; }
         .dose-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+            gap: 10px;
         }
-
         .dose-box {
             aspect-ratio: 1;
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-size: 0.8rem;
-            font-weight: bold;
-            background-color: #e9ecef;
+            font-weight: 800;
+            background-color: var(--bg-card);
             color: var(--text-muted);
+            box-shadow: var(--shadow-soft);
             border: 2px solid transparent;
+            transition: all 0.3s;
         }
-
         .dose-box.taken {
-            background-color: var(--success-light);
-            color: var(--success);
-            border-color: var(--success);
+            background-color: var(--secondary-light);
+            color: var(--secondary);
+            border-color: var(--secondary);
         }
-
         .dose-box.missed {
-            background-color: #fff3cd;
+            background-color: var(--warning-light);
             color: var(--warning);
             border-color: var(--warning);
         }
-
         .dose-box.today {
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px var(--primary-light);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            transform: scale(1.05);
         }
 
-        /* Asisten Chat */
+        /* --- ASISTEN CHAT --- */
         .chat-container {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            height: calc(100vh - 200px);
-            overflow-y: auto;
             padding-bottom: 20px;
         }
-
         .chat-bubble {
             max-width: 85%;
             padding: 16px;
-            border-radius: 16px;
+            border-radius: 20px;
             line-height: 1.5;
             position: relative;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-soft);
         }
-
         .chat-bot {
-            background-color: var(--primary-light);
+            background-color: var(--bg-card);
             color: var(--text-main);
             align-self: flex-start;
             border-bottom-left-radius: 4px;
         }
-
         .chat-user {
             background-color: var(--primary);
             color: var(--white);
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
-
         .chat-sources {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             margin-top: 8px;
             font-style: italic;
-            border-top: 1px solid rgba(0,0,0,0.1);
+            border-top: 1px solid #E5E7EB;
             padding-top: 8px;
         }
-
         .btn-tts {
-            background: none;
+            background: var(--primary-light);
             border: none;
             color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 12px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.9rem;
-            margin-top: 8px;
-            font-weight: bold;
+            gap: 6px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            font-weight: 800;
+        }
+        .btn-tts:active { transform: scale(0.95); }
+        
+        .red-flag {
+            background-color: var(--danger-light);
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            font-weight: 700;
         }
 
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: var(--bg-card);
+            padding: 12px 16px;
+            border-radius: 20px;
+            border-bottom-left-radius: 4px;
+            box-shadow: var(--shadow-soft);
+            gap: 4px;
+        }
+        .typing-indicator.active { display: flex; }
+        .dot { width: 8px; height: 8px; background: #D1D5DB; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        /* Quick Replies */
         .quick-replies {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
+            padding: 10px 0;
+            scrollbar-width: none;
         }
-
+        .quick-replies::-webkit-scrollbar { display: none; }
         .quick-reply-btn {
-            background-color: var(--white);
-            border: 2px solid var(--primary);
+            background-color: var(--bg-card);
+            border: 2px solid var(--primary-light);
             color: var(--primary);
             padding: 10px 16px;
             border-radius: 20px;
             white-space: nowrap;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        /* Pendamping */
-        .risk-card {
-            background: var(--white);
-            border: 2px solid var(--danger);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .risk-card h4 { color: var(--danger); margin-bottom: 8px; }
-        .risk-card p { font-size: 0.9rem; }
-
-        /* Pengaturan */
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .setting-item:last-child { border-bottom: none; }
-        .toggle-switch {
-            position: relative;
-            width: 56px;
-            height: 32px;
-        }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 32px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 24px; width: 24px;
-            left: 4px; bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(24px); }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: var(--white);
-            display: flex;
-            justify-content: space-around;
-            border-top: 1px solid #ddd;
-            padding: 8px 0;
-            z-index: 10;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            text-decoration: none;
             font-size: 0.85rem;
-            gap: 4px;
-            padding: 8px;
-            cursor: pointer;
-            border: none;
-            background: none;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
+        .quick-reply-btn:active { background: var(--primary-light); }
 
-        .nav-item.active {
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .nav-item .material-icons { font-size: 28px; }
-
-        .input-area {
+        /* Input Area Fixed */
+        .chat-input-area {
+            position: absolute;
+            bottom: 70px; /* Di atas bottom nav */
+            left: 0; right: 0;
+            background: var(--bg-body);
+            padding: 12px 24px;
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 12px;
+            z-index: 5;
         }
-        .input-area input {
+        .chat-input-area input {
             flex: 1;
-            padding: 16px;
+            padding: 16px 20px;
             border-radius: 24px;
-            border: 1px solid #ccc;
+            border: none;
+            background: var(--bg-card);
             font-size: 1rem;
+            box-shadow: var(--shadow-soft);
         }
-        .input-area button {
-            background-color: var(--primary);
+        .chat-input-area input:focus { outline: 2px solid var(--primary); }
+        .chat-input-area button {
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 50%;
@@ -348,49 +427,183 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
         }
 
-        /* Red Flag Warning */
-        .red-flag {
-            background-color: #f8d7da;
-            color: var(--danger);
-            border: 2px solid var(--danger);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 10px;
-            font-weight: bold;
+        /* --- PENDAMPING --- */
+        .risk-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-soft);
+            border-left: 6px solid var(--danger);
         }
+        .risk-card.warning { border-left-color: var(--warning); }
+        .risk-card.safe { border-left-color: var(--secondary); }
+        .risk-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;}
+        .risk-header h4 { font-size: 1.1rem; font-weight: 800; }
+        .risk-badge { background: var(--danger-light); color: var(--danger); padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 800; }
+        .risk-badge.warning { background: var(--warning-light); color: var(--warning); }
+        
+        .progress-bar-bg { width: 100%; height: 8px; background: #E5E7EB; border-radius: 4px; margin-top: 12px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--danger); width: 20%; border-radius: 4px; }
+        .progress-bar-fill.warning { background: var(--warning); width: 60%; }
+
+        /* --- PENGATURAN / PROFIL --- */
+        .profile-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 24px;
+        }
+        .profile-card .avatar {
+            width: 80px; height: 80px; font-size: 32px;
+            margin: 0 auto 16px auto;
+        }
+        .profile-card h3 { font-size: 1.3rem; font-weight: 800; }
+        .profile-card p { color: var(--text-muted); }
+
+        .setting-list {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 0 20px;
+            box-shadow: var(--shadow-soft);
+        }
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .setting-item:last-child { border-bottom: none; }
+        .setting-item strong { display: block; font-size: 1rem; }
+        .setting-item p { font-size: 0.8rem; color: var(--text-muted); }
+        
+        /* Toggle Switch */
+        .toggle-switch { position: relative; width: 52px; height: 30px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #D1D5DB; transition: .4s; border-radius: 30px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 22px; width: 22px;
+            left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        .btn-logout {
+            width: 100%; padding: 16px; background: var(--danger-light); color: var(--danger);
+            border: 2px solid var(--danger); border-radius: var(--radius-md);
+            font-size: 1rem; font-weight: 800; margin-top: 24px; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+
+        /* ================= BOTTOM NAVIGATION ================= */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255,255,255,0.3);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* Fix HP dengan home indicator */
+            z-index: 10;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.75rem; font-weight: 700; gap: 4px;
+            cursor: pointer; border: none; background: none;
+            transition: all 0.2s;
+        }
+        .nav-item .material-icons-round { font-size: 26px; padding: 4px 16px; border-radius: 16px; transition: all 0.3s;}
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active .material-icons-round { background: var(--primary-light); }
+
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<!-- ================= AUTH SCREEN ================= -->
+<div id="auth-screen">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <span class="material-icons-round">health_and_safety</span>
+        </div>
+        <h2 id="auth-title">Selamat Datang</h2>
+        <p id="auth-subtitle">Masuk untuk melanjutkan pengobatan Anda</p>
+        
+        <form id="auth-form" onsubmit="handleAuth(event)">
+            <div class="input-group" id="name-group" style="display: none;">
+                <label>Nama Lengkap</label>
+                <input type="text" id="auth-name" placeholder="Masukkan nama Anda">
+            </div>
+            <div class="input-group">
+                <label>Email / No. HP</label>
+                <input type="text" id="auth-email" placeholder="contoh: pasien@email.com" required>
+            </div>
+            <div class="input-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="auth-password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-auth" id="btn-submit-auth">Masuk Sekarang</button>
+        </form>
+        
+        <div class="auth-toggle">
+            <span id="toggle-text">Belum punya akun?</span> 
+            <span id="toggle-btn" onclick="toggleAuthMode()">Daftar</span>
+        </div>
+    </div>
+</div>
+
+<!-- ================= MAIN APP ================= -->
+<div class="app-container" id="app-screen">
+    
     <!-- Header -->
     <header>
-        <div class="header-title">Pendamping Obat</div>
+        <div class="user-greeting">
+            <div class="avatar" id="header-avatar">P</div>
+            <div class="greeting-text">
+                <h2 id="header-name">Halo, Pasien!</h2>
+                <p>Semangat sembuh hari ini!</p>
+            </div>
+        </div>
         <div id="offline-badge" class="offline-badge">Offline</div>
     </header>
 
     <!-- Main Content -->
-    <main>
+    <main id="main-content">
         <!-- VIEW BERANDA -->
         <section id="view-beranda" class="view-section active">
-            <div class="greeting">
-                <h2>Halo, Pasien!</h2>
-                <p>Jangan lupa minum obat hari ini ya.</p>
+            <div class="streak-card">
+                <div class="streak-info">
+                    <span class="material-icons-round">local_fire_department</span>
+                    <div>
+                        <h3 id="streak-count">5 Hari</h3>
+                        <p>Beruntun minum obat!</p>
+                    </div>
+                </div>
             </div>
 
-            <button id="btn-minum" class="btn-primary" onclick="catatMinum()">
-                <span class="material-icons" style="font-size: 32px;">check_circle</span>
+            <button id="btn-minum" class="btn-primary" onclick="catatMinum(this)">
+                <span class="material-icons-round" style="font-size: 32px;">check_circle</span>
                 SUDAH MINUM
             </button>
 
-            <div class="dose-grid-container">
+            <div class="dose-section">
                 <h3>Riwayat 14 Hari</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
-                    <span style="color: var(--success);">■</span> Diminum &nbsp;&nbsp;
-                    <span style="color: var(--warning);">■</span> Terlewat
-                </p>
                 <div class="dose-grid" id="dose-grid">
                     <!-- Diisi via JS -->
                 </div>
@@ -398,174 +611,247 @@
         </section>
 
         <!-- VIEW ASISTEN -->
-        <section id="view-asisten" class="view-section">
+        <section id="view-asisten" class="view-section" style="padding-bottom: 80px;">
             <div class="chat-container" id="chat-container">
                 <!-- Chat Bubbles -->
                 <div class="chat-bubble chat-bot">
                     Halo! Saya asisten AI Anda. Ada yang ingin ditanyakan seputar obat TBC Anda?
-                    <div class="chat-sources">Sumber: Buku Pedoman TBC Kemenkes</div>
+                    <div class="chat-sources">Sumber: Pedoman TBC Kemenkes</div>
                     <button class="btn-tts" onclick="bacakanTeks(this)">
-                        <span class="material-icons">volume_up</span> Bacakan
+                        <span class="material-icons-round" style="font-size: 16px;">volume_up</span> Bacakan
                     </button>
                 </div>
-            </div>
-            
-            <div class="quick-replies">
-                <button class="quick-reply-btn" onclick="kirimPesanCepat('Apa efek samping obat?')">Efek Samping</button>
-                <button class="quick-reply-btn" onclick="kirimPesanCepat('Mata saya menguning')">Mata Menguning</button>
-                <button class="quick-reply-btn" onclick="kirimPesanCepat('Bolehkah minum obat bersamaan?')">Interaksi Obat</button>
-            </div>
-
-            <div class="input-area">
-                <input type="text" id="chat-input" placeholder="Ketik pertanyaan..." onkeypress="handleEnter(event)">
-                <button onclick="kirimPesan()">
-                    <span class="material-icons">send</span>
-                </button>
+                
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typing-indicator">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
             </div>
         </section>
 
         <!-- VIEW PENDAMPING -->
         <section id="view-pendamping" class="view-section">
-            <h2>Daftar Prioritas</h2>
-            <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.9rem;">
+            <h2 style="margin-bottom: 8px;">Daftar Prioritas</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">
                 Pasien yang berisiko putus obat dan perlu dihubungi.
             </p>
 
             <div class="risk-card">
-                <h4>Pasien A (Risiko Tinggi)</h4>
-                <p>Terlewat 3 hari berturut-turut. Segera hubungi.</p>
-                <button class="btn-primary" style="font-size: 1rem; padding: 12px; margin-top: 12px; background-color: var(--danger);">Hubungi Pasien</button>
+                <div class="risk-header">
+                    <h4>Budi Santoso</h4>
+                    <span class="risk-badge">Risiko Tinggi</span>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Terlewat 3 hari berturut-turut.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill"></div>
+                </div>
+                <button class="btn-auth" style="font-size: 1rem; padding: 12px; margin-top: 16px; background-color: var(--danger);">Hubungi Pasien</button>
             </div>
 
-            <div class="risk-card" style="border-color: var(--warning);">
-                <h4 style="color: var(--warning);">Pasien B (Risiko Sedang)</h4>
-                <p>Terlewat 1 hari minggu ini.</p>
+            <div class="risk-card warning">
+                <div class="risk-header">
+                    <h4>Siti Aminah</h4>
+                    <span class="risk-badge warning">Risiko Sedang</span>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Terlewat 1 hari minggu ini.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill warning"></div>
+                </div>
             </div>
         </section>
 
-        <!-- VIEW PENGATURAN -->
+        <!-- VIEW PENGATURAN / PROFIL -->
         <section id="view-pengaturan" class="view-section">
-            <h2>Pengaturan</h2>
-            
-            <div class="setting-item">
-                <div>
-                    <strong>Bacakan Jawaban Otomatis</strong>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Asisten akan bersuara</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="toggle-tts">
-                    <span class="slider"></span>
-                </label>
+            <div class="profile-card">
+                <div class="avatar" id="profile-avatar">P</div>
+                <h3 id="profile-name">Nama Pasien</h3>
+                <p id="profile-email">pasien@email.com</p>
             </div>
 
-            <div class="setting-item">
-                <div>
-                    <strong>Pengingat Offline</strong>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Tetap berdering tanpa internet</p>
+            <h3 style="margin-bottom: 12px; font-size: 1.1rem;">Pengaturan Aplikasi</h3>
+            <div class="setting-list">
+                <div class="setting-item">
+                    <div>
+                        <strong>Suara Asisten</strong>
+                        <p>Bacakan jawaban otomatis</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-tts">
+                        <span class="slider"></span>
+                    </label>
                 </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" checked disabled>
-                    <span class="slider"></span>
-                </label>
+
+                <div class="setting-item">
+                    <div>
+                        <strong>Privasi Data</strong>
+                        <p>Notifikasi disamarkan (UU PDP)</p>
+                    </div>
+                    <span class="material-icons-round" style="color: var(--secondary);">verified_user</span>
+                </div>
             </div>
 
-            <div class="setting-item">
-                <div>
-                    <strong>Privasi & Data (UU PDP)</strong>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Notifikasi disamarkan di layar kunci</p>
-                </div>
-                <span class="material-icons" style="color: var(--success);">verified_user</span>
-            </div>
+            <button class="btn-logout" onclick="handleLogout()">
+                <span class="material-icons-round">logout</span> Keluar Akun
+            </button>
         </section>
     </main>
+
+    <!-- Chat Input Area (Hanya muncul di tab Asisten) -->
+    <div class="chat-input-area" id="chat-input-area" style="display: none;">
+        <input type="text" id="chat-input" placeholder="Ketik pertanyaan..." onkeypress="handleEnter(event)">
+        <button onclick="kirimPesan()">
+            <span class="material-icons-round">send</span>
+        </button>
+    </div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('beranda', this)">
-            <span class="material-icons">home</span>
+            <span class="material-icons-round">home</span>
             Beranda
         </button>
         <button class="nav-item" onclick="switchTab('asisten', this)">
-            <span class="material-icons">chat</span>
+            <span class="material-icons-round">smart_toy</span>
             Asisten
         </button>
         <button class="nav-item" onclick="switchTab('pendamping', this)">
-            <span class="material-icons">people</span>
+            <span class="material-icons-round">groups</span>
             Pendamping
         </button>
         <button class="nav-item" onclick="switchTab('pengaturan', this)">
-            <span class="material-icons">settings</span>
-            Pengaturan
+            <span class="material-icons-round">person</span>
+            Profil
         </button>
     </nav>
 </div>
 
 <script>
-    // --- 1. LOGIKA NAVIGASI ---
+    // --- 1. AUTENTIKASI (SIMULASI) ---
+    let isLoginMode = true;
+    
+    function checkAuth() {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (user) {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-screen').style.display = 'flex';
+            document.getElementById('header-name').innerText = `Halo, ${user.name.split(' ')[0]}!`;
+            document.getElementById('profile-name').innerText = user.name;
+            document.getElementById('profile-email').innerText = user.email;
+            document.getElementById('header-avatar').innerText = user.name.charAt(0).toUpperCase();
+            document.getElementById('profile-avatar').innerText = user.name.charAt(0).toUpperCase();
+        } else {
+            document.getElementById('auth-screen').style.display = 'flex';
+            document.getElementById('app-screen').style.display = 'none';
+        }
+    }
+
+    function toggleAuthMode() {
+        isLoginMode = !isLoginMode;
+        document.getElementById('name-group').style.display = isLoginMode ? 'none' : 'block';
+        document.getElementById('auth-title').innerText = isLoginMode ? 'Selamat Datang' : 'Buat Akun Baru';
+        document.getElementById('auth-subtitle').innerText = isLoginMode ? 'Masuk untuk melanjutkan pengobatan Anda' : 'Daftar untuk memulai pendampingan';
+        document.getElementById('btn-submit-auth').innerText = isLoginMode ? 'Masuk Sekarang' : 'Daftar Sekarang';
+        document.getElementById('toggle-text').innerText = isLoginMode ? 'Belum punya akun?' : 'Sudah punya akun?';
+        document.getElementById('toggle-btn').innerText = isLoginMode ? 'Daftar' : 'Masuk';
+    }
+
+    function handleAuth(e) {
+        e.preventDefault();
+        const nameInput = document.getElementById('auth-name').value;
+        const email = document.getElementById('auth-email').value;
+        
+        // Simulasi penyimpanan user
+        const user = {
+            name: isLoginMode ? (email.split('@')[0] || 'Pasien') : nameInput, 
+            email: email
+        };
+        
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        checkAuth(); // Refresh UI
+    }
+
+    function handleLogout() {
+        if(confirm('Apakah Anda yakin ingin keluar?')) {
+            localStorage.removeItem('currentUser');
+            checkAuth();
+        }
+    }
+
+    // --- 2. LOGIKA NAVIGASI ---
     function switchTab(tabId, btnElement) {
         document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
         
         document.getElementById('view-' + tabId).classList.add('active');
         btnElement.classList.add('active');
+
+        // Sembunyikan/Tampilkan input chat
+        const chatInput = document.getElementById('chat-input-area');
+        if(tabId === 'asisten') {
+            chatInput.style.display = 'flex';
+            const container = document.getElementById('chat-container');
+            container.scrollTop = container.scrollHeight;
+        } else {
+            chatInput.style.display = 'none';
+        }
     }
 
-    // --- 2. LOGIKA BERANDA & TRACKER 14 HARI ---
+    // --- 3. LOGIKA BERANDA & TRACKER 14 HARI ---
     let dosisData = JSON.parse(localStorage.getItem('dosisData')) || Array(14).fill('empty');
-    
+    let streak = parseInt(localStorage.getItem('streak')) || 5;
+
     function renderGrid() {
         const grid = document.getElementById('dose-grid');
         grid.innerHTML = '';
-        const todayIndex = 6; // Simulasi: Misal hari ini adalah hari ke-7 (index 6)
+        const todayIndex = 6; 
 
         dosisData.forEach((status, index) => {
             const box = document.createElement('div');
             box.className = `dose-box ${status}`;
             if (index === todayIndex && status === 'empty') box.classList.add('today');
-            
-            // Tampilkan tanggal / hari
             box.innerHTML = `<span>H-${index + 1}</span>`;
             grid.appendChild(box);
         });
+
+        // Update tombol jika sudah minum hari ini
+        const btn = document.getElementById('btn-minum');
+        if(dosisData[6] === 'taken') {
+            btn.classList.add('taken');
+            btn.innerHTML = `<span class="material-icons-round" style="font-size: 32px;">check_circle</span> SUDAH DIMINUM`;
+        }
+        
+        document.getElementById('streak-count').innerText = `${streak} Hari`;
     }
 
-    function catatMinum() {
-        const btn = document.getElementById('btn-minum');
-        if (btn.classList.contains('taken')) return; // Cegah double klik
+    function catatMinum(btn) {
+        if (btn.classList.contains('taken')) return; 
 
-        // Simulasi mencatat dosis hari ini (index 6)
         dosisData[6] = 'taken';
+        streak++;
         localStorage.setItem('dosisData', JSON.stringify(dosisData));
+        localStorage.setItem('streak', streak);
         
-        btn.classList.add('taken');
-        btn.innerHTML = `<span class="material-icons" style="font-size: 32px;">check_circle</span> SUDAH DIMINUM`;
-        
-        // Update grid
         renderGrid();
         
-        // Simulasi sinkronisasi online/offline
+        // Efek suara / getar singkat (opsional)
+        if (navigator.vibrate) navigator.vibrate(100);
+
         if (!navigator.onLine) {
             alert("Tercatat! Data akan disinkronkan saat internet tersedia.");
         } else {
-            alert("Tercatat! Terima kasih telah minum obat.");
+            // Animasi confetti sederhana (simulasi)
+            btn.innerHTML = `<span class="material-icons-round" style="font-size: 32px;">task_alt</span> MANTAP!`;
+            setTimeout(() => {
+                btn.innerHTML = `<span class="material-icons-round" style="font-size: 32px;">check_circle</span> SUDAH DIMINUM`;
+            }, 2000);
         }
     }
 
-    // --- 3. LOGIKA ASISTEN AI (SIMULASI) ---
+    // --- 4. LOGIKA ASISTEN AI (SIMULASI) ---
     const knowledgeBase = {
-        "efek samping": {
-            text: "Efek samping umum obat TBC adalah mual, pusing, dan air kencing berwarna kemerahan (karena obat Rifampisin). Ini normal. Namun, jika Anda mual hebat, minumlah obat setelah makan.",
-            source: "Sumber: Leaflet Informasi Obat TBC Kemenkes RI"
-        },
-        "mata menguning": {
-            text: "PERINGATAN BAHKAN! Mata atau kulit menguning bisa jadi tanda masalah hati (hepatitis) akibat obat. SEGERA hentikan konsumsi obat dan hubungi Petugas Puskesmas atau faskes terdekat hari ini juga.",
-            source: "Sumber: Protokol Penanganan Efek Samping Obat TBC",
-            isRedFlag: true
-        },
-        "interaksi obat": {
-            text: "Beberapa obat bisa berinteraksi. Hindari minum obat TBC bersamaan dengan susu, antasida (obat maag), atau pil KB karena bisa mengurangi penyerapan obat. Beri jeda minimal 2 jam.",
-            source: "Sumber: Buku Pedoman Nasional Pengendalian TBC"
-        }
+        "efek samping": { text: "Efek samping umum obat TBC adalah mual, pusing, dan air kencing berwarna kemerahan (karena obat Rifampisin). Ini normal. Namun, jika Anda mual hebat, minumlah obat setelah makan.", source: "Sumber: Leaflet Informasi Obat TBC Kemenkes RI" },
+        "mata menguning": { text: "PERINGATAN BAHKAN! Mata atau kulit menguning bisa jadi tanda masalah hati (hepatitis) akibat obat. SEGERA hentikan konsumsi obat dan hubungi Petugas Puskesmas atau faskes terdekat hari ini juga.", source: "Sumber: Protokol Penanganan Efek Samping Obat TBC", isRedFlag: true },
+        "interaksi obat": { text: "Beberapa obat bisa berinteraksi. Hindari minum obat TBC bersamaan dengan susu, antasida (obat maag), atau pil KB karena bisa mengurangi penyerapan obat. Beri jeda minimal 2 jam.", source: "Sumber: Buku Pedoman Nasional Pengendalian TBC" }
     };
 
     function kirimPesanCepat(teks) {
@@ -582,96 +868,82 @@
         const text = input.value.trim();
         if (!text) return;
 
-        // Tampilkan pesan user
         tambahChat(text, 'user');
         input.value = '';
 
-        // Simulasi AI menjawab (delay 1 detik)
-        setTimeout(() => {
-            const lowerText = text.toLowerCase();
-            let reply = {
-                text: "Maaf, saya hanya asisten AI yang menjawab dari rujukan terverifikasi. Untuk pertanyaan spesifik ini, silakan konsultasikan ke Petugas Puskesmas atau dokter Anda.",
-                source: "Sistem Keamanan AI"
-            };
+        const typing = document.getElementById('typing-indicator');
+        const container = document.getElementById('chat-container');
+        
+        // Tampilkan indikator mengetik
+        container.appendChild(typing);
+        typing.classList.add('active');
+        container.scrollTop = container.scrollHeight;
 
-            if (lowerText.includes('efek samping') || lowerText.includes('mual')) {
-                reply = knowledgeBase["efek samping"];
-            } else if (lowerText.includes('mata') || lowerText.includes('kuning')) {
-                reply = knowledgeBase["mata menguning"];
-            } else if (lowerText.includes('interaksi') || lowerText.includes('bersamaan')) {
-                reply = knowledgeBase["interaksi obat"];
-            }
+        setTimeout(() => {
+            typing.classList.remove('active');
+            
+            const lowerText = text.toLowerCase();
+            let reply = { text: "Maaf, saya hanya asisten AI yang menjawab dari rujukan terverifikasi. Untuk pertanyaan spesifik ini, silakan konsultasikan ke Petugas Puskesmas atau dokter Anda.", source: "Sistem Keamanan AI" };
+
+            if (lowerText.includes('efek samping') || lowerText.includes('mual')) reply = knowledgeBase["efek samping"];
+            else if (lowerText.includes('mata') || lowerText.includes('kuning')) reply = knowledgeBase["mata menguning"];
+            else if (lowerText.includes('interaksi') || lowerText.includes('bersamaan')) reply = knowledgeBase["interaksi obat"];
 
             tambahChat(reply.text, 'bot', reply.source, reply.isRedFlag);
-        }, 1000);
+        }, 1500);
     }
 
     function tambahChat(teks, pengirim, sumber = null, isRedFlag = false) {
         const container = document.getElementById('chat-container');
+        const typing = document.getElementById('typing-indicator');
+        
         const bubble = document.createElement('div');
         bubble.className = `chat-bubble chat-${pengirim}`;
-        
         if (isRedFlag) bubble.classList.add('red-flag');
 
         let html = `<div>${teks}</div>`;
         
-        if (sumber) {
-            html += `<div class="chat-sources">${sumber}</div>`;
-        }
-
+        if (sumber) html += `<div class="chat-sources">${sumber}</div>`;
         if (pengirim === 'bot') {
-            html += `
-                <button class="btn-tts" onclick="bacakanTeks(this)">
-                    <span class="material-icons">volume_up</span> Bacakan Jawaban
-                </button>
-            `;
+            html += `<button class="btn-tts" onclick="bacakanTeks(this)"><span class="material-icons-round" style="font-size: 16px;">volume_up</span> Bacakan</button>`;
         }
 
         bubble.innerHTML = html;
-        container.appendChild(bubble);
+        
+        // Sisipkan sebelum indikator typing
+        container.insertBefore(bubble, typing);
         container.scrollTop = container.scrollHeight;
 
-        // Auto TTS jika settingan aktif
         if (pengirim === 'bot' && document.getElementById('toggle-tts').checked) {
             speak(teks);
         }
     }
 
-    // --- 4. TEXT-TO-SPEECH (TTS) ---
+    // --- 5. TEXT-TO-SPEECH & OFFLINE ---
     function bacakanTeks(btn) {
-        // Mengambil teks dari bubble chat sebelumnya
         const textToSpeak = btn.parentElement.querySelector('div').innerText;
         speak(textToSpeak);
     }
 
     function speak(text) {
         if ('speechSynthesis' in window) {
-            // Hentikan suara sebelumnya jika ada
             window.speechSynthesis.cancel();
-            
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'id-ID'; // Bahasa Indonesia
-            utterance.rate = 0.9; // Sedikit lebih lambat agar jelas untuk lansia
+            utterance.lang = 'id-ID';
+            utterance.rate = 0.9;
             window.speechSynthesis.speak(utterance);
-        } else {
-            alert("Browser Anda tidak mendukung fitur suara.");
         }
     }
 
-    // --- 5. DETEKSI STATUS OFFLINE ---
     function updateOnlineStatus() {
-        const badge = document.getElementById('offline-badge');
-        if (navigator.onLine) {
-            badge.style.display = 'none';
-        } else {
-            badge.style.display = 'block';
-        }
+        document.getElementById('offline-badge').style.display = navigator.onLine ? 'none' : 'block';
     }
 
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
 
-    // --- INITIALIZATION ---
+    // INITIALIZATION
+    checkAuth();
     renderGrid();
     updateOnlineStatus();
 </script>
