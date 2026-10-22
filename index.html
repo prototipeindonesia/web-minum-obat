@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0056b3">
+    <title>Pendamping Minum Obat</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0056b3;
+            --primary-light: #e6f0fa;
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #fd7e14;
+            --danger: #dc3545;
+            --bg-color: #f8f9fa;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --white: #ffffff;
+            --font-base: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-size: var(--font-base);
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* App Container (Mobile Frame) */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--white);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        header {
+            padding: 16px;
+            background-color: var(--white);
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .offline-badge {
+            background-color: var(--danger);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Beranda */
+        .greeting h2 { font-size: 1.5rem; margin-bottom: 8px; }
+        .greeting p { color: var(--text-muted); margin-bottom: 24px; }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 16px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 86, 179, 0.3);
+            transition: transform 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary.taken {
+            background-color: var(--success);
+            box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Grid 14 Hari */
+        .dose-grid-container { margin-top: 32px; }
+        .dose-grid-container h3 { margin-bottom: 12px; font-size: 1.1rem; }
+        .dose-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .dose-box {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background-color: #e9ecef;
+            color: var(--text-muted);
+            border: 2px solid transparent;
+        }
+
+        .dose-box.taken {
+            background-color: var(--success-light);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .dose-box.missed {
+            background-color: #fff3cd;
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .dose-box.today {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        /* Asisten Chat */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 16px;
+            border-radius: 16px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .chat-bot {
+            background-color: var(--primary-light);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-user {
+            background-color: var(--primary);
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-sources {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-style: italic;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 8px;
+        }
+
+        .btn-tts {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+
+        .quick-reply-btn {
+            background-color: var(--white);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Pendamping */
+        .risk-card {
+            background: var(--white);
+            border: 2px solid var(--danger);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .risk-card h4 { color: var(--danger); margin-bottom: 8px; }
+        .risk-card p { font-size: 0.9rem; }
+
+        /* Pengaturan */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .setting-item:last-child { border-bottom: none; }
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 32px;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 32px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 24px; width: 24px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #ddd;
+            padding: 8px 0;
+            z-index: 10;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .nav-item .material-icons { font-size: 28px; }
+
+        .input-area {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 16px;
+            border-radius: 24px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        .input-area button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Red Flag Warning */
+        .red-flag {
+            background-color: #f8d7da;
+            color: var(--danger);
+            border: 2px solid var(--danger);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Header -->
+    <header>
+        <div class="header-title">Pendamping Obat</div>
+        <div id="offline-badge" class="offline-badge">Offline</div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- VIEW BERANDA -->
+        <section id="view-beranda" class="view-section active">
+            <div class="greeting">
+                <h2>Halo, Pasien!</h2>
+                <p>Jangan lupa minum obat hari ini ya.</p>
+            </div>
+
+            <button id="btn-minum" class="btn-primary" onclick="catatMinum()">
+                <span class="material-icons" style="font-size: 32px;">check_circle</span>
+                SUDAH MINUM
+            </button>
+
+            <div class="dose-grid-container">
+                <h3>Riwayat 14 Hari</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+                    <span style="color: var(--success);">■</span> Diminum &nbsp;&nbsp;
+                    <span style="color: var(--warning);">■</span> Terlewat
+                </p>
+                <div class="dose-grid" id="dose-grid">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW ASISTEN -->
+        <section id="view-asisten" class="view-section">
+            <div class="chat-container" id="chat-container">
+                <!-- Chat Bubbles -->
+                <div class="chat-bubble chat-bot">
+                    Halo! Saya asisten AI Anda. Ada yang ingin ditanyakan seputar obat TBC Anda?
+                    <div class="chat-sources">Sumber: Buku Pedoman TBC Kemenkes</div>
+                    <button class="btn-tts" onclick="bacakanTeks(this)">
+                        <span class="material-icons">volume_up</span> Bacakan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="quick-replies">
+                <button class="quick-reply-btn" onclick="kirimPesanCepat('Apa efek samping obat?')">Efek Samping</button>
+                <button class="quick-reply-btn" onclick="kirimPesanCepat('Mata saya menguning')">Mata Menguning</button>
+                <button class="quick-reply-btn" onclick="kirimPesanCepat('Bolehkah minum obat bersamaan?')">Interaksi Obat</button>
+            </div>
+
+            <div class="input-area">
+                <input type="text" id="chat-input" placeholder="Ketik pertanyaan..." onkeypress="handleEnter(event)">
+                <button onclick="kirimPesan()">
+                    <span class="material-icons">send</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW PENDAMPING -->
+        <section id="view-pendamping" class="view-section">
+            <h2>Daftar Prioritas</h2>
+            <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.9rem;">
+                Pasien yang berisiko putus obat dan perlu dihubungi.
+            </p>
+
+            <div class="risk-card">
+                <h4>Pasien A (Risiko Tinggi)</h4>
+                <p>Terlewat 3 hari berturut-turut. Segera hubungi.</p>
+                <button class="btn-primary" style="font-size: 1rem; padding: 12px; margin-top: 12px; background-color: var(--danger);">Hubungi Pasien</button>
+            </div>
+
+            <div class="risk-card" style="border-color: var(--warning);">
+                <h4 style="color: var(--warning);">Pasien B (Risiko Sedang)</h4>
+                <p>Terlewat 1 hari minggu ini.</p>
+            </div>
+        </section>
+
+        <!-- VIEW PENGATURAN -->
+        <section id="view-pengaturan" class="view-section">
+            <h2>Pengaturan</h2>
+            
+            <div class="setting-item">
+                <div>
+                    <strong>Bacakan Jawaban Otomatis</strong>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Asisten akan bersuara</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-tts">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <strong>Pengingat Offline</strong>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Tetap berdering tanpa internet</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <strong>Privasi & Data (UU PDP)</strong>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Notifikasi disamarkan di layar kunci</p>
+                </div>
+                <span class="material-icons" style="color: var(--success);">verified_user</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('beranda', this)">
+            <span class="material-icons">home</span>
+            Beranda
+        </button>
+        <button class="nav-item" onclick="switchTab('asisten', this)">
+            <span class="material-icons">chat</span>
+            Asisten
+        </button>
+        <button class="nav-item" onclick="switchTab('pendamping', this)">
+            <span class="material-icons">people</span>
+            Pendamping
+        </button>
+        <button class="nav-item" onclick="switchTab('pengaturan', this)">
+            <span class="material-icons">settings</span>
+            Pengaturan
+        </button>
+    </nav>
+</div>
+
+<script>
+    // --- 1. LOGIKA NAVIGASI ---
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        
+        document.getElementById('view-' + tabId).classList.add('active');
+        btnElement.classList.add('active');
+    }
+
+    // --- 2. LOGIKA BERANDA & TRACKER 14 HARI ---
+    let dosisData = JSON.parse(localStorage.getItem('dosisData')) || Array(14).fill('empty');
+    
+    function renderGrid() {
+        const grid = document.getElementById('dose-grid');
+        grid.innerHTML = '';
+        const todayIndex = 6; // Simulasi: Misal hari ini adalah hari ke-7 (index 6)
+
+        dosisData.forEach((status, index) => {
+            const box = document.createElement('div');
+            box.className = `dose-box ${status}`;
+            if (index === todayIndex && status === 'empty') box.classList.add('today');
+            
+            // Tampilkan tanggal / hari
+            box.innerHTML = `<span>H-${index + 1}</span>`;
+            grid.appendChild(box);
+        });
+    }
+
+    function catatMinum() {
+        const btn = document.getElementById('btn-minum');
+        if (btn.classList.contains('taken')) return; // Cegah double klik
+
+        // Simulasi mencatat dosis hari ini (index 6)
+        dosisData[6] = 'taken';
+        localStorage.setItem('dosisData', JSON.stringify(dosisData));
+        
+        btn.classList.add('taken');
+        btn.innerHTML = `<span class="material-icons" style="font-size: 32px;">check_circle</span> SUDAH DIMINUM`;
+        
+        // Update grid
+        renderGrid();
+        
+        // Simulasi sinkronisasi online/offline
+        if (!navigator.onLine) {
+            alert("Tercatat! Data akan disinkronkan saat internet tersedia.");
+        } else {
+            alert("Tercatat! Terima kasih telah minum obat.");
+        }
+    }
+
+    // --- 3. LOGIKA ASISTEN AI (SIMULASI) ---
+    const knowledgeBase = {
+        "efek samping": {
+            text: "Efek samping umum obat TBC adalah mual, pusing, dan air kencing berwarna kemerahan (karena obat Rifampisin). Ini normal. Namun, jika Anda mual hebat, minumlah obat setelah makan.",
+            source: "Sumber: Leaflet Informasi Obat TBC Kemenkes RI"
+        },
+        "mata menguning": {
+            text: "PERINGATAN BAHKAN! Mata atau kulit menguning bisa jadi tanda masalah hati (hepatitis) akibat obat. SEGERA hentikan konsumsi obat dan hubungi Petugas Puskesmas atau faskes terdekat hari ini juga.",
+            source: "Sumber: Protokol Penanganan Efek Samping Obat TBC",
+            isRedFlag: true
+        },
+        "interaksi obat": {
+            text: "Beberapa obat bisa berinteraksi. Hindari minum obat TBC bersamaan dengan susu, antasida (obat maag), atau pil KB karena bisa mengurangi penyerapan obat. Beri jeda minimal 2 jam.",
+            source: "Sumber: Buku Pedoman Nasional Pengendalian TBC"
+        }
+    };
+
+    function kirimPesanCepat(teks) {
+        document.getElementById('chat-input').value = teks;
+        kirimPesan();
+    }
+
+    function handleEnter(e) {
+        if (e.key === 'Enter') kirimPesan();
+    }
+
+    function kirimPesan() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        // Tampilkan pesan user
+        tambahChat(text, 'user');
+        input.value = '';
+
+        // Simulasi AI menjawab (delay 1 detik)
+        setTimeout(() => {
+            const lowerText = text.toLowerCase();
+            let reply = {
+                text: "Maaf, saya hanya asisten AI yang menjawab dari rujukan terverifikasi. Untuk pertanyaan spesifik ini, silakan konsultasikan ke Petugas Puskesmas atau dokter Anda.",
+                source: "Sistem Keamanan AI"
+            };
+
+            if (lowerText.includes('efek samping') || lowerText.includes('mual')) {
+                reply = knowledgeBase["efek samping"];
+            } else if (lowerText.includes('mata') || lowerText.includes('kuning')) {
+                reply = knowledgeBase["mata menguning"];
+            } else if (lowerText.includes('interaksi') || lowerText.includes('bersamaan')) {
+                reply = knowledgeBase["interaksi obat"];
+            }
+
+            tambahChat(reply.text, 'bot', reply.source, reply.isRedFlag);
+        }, 1000);
+    }
+
+    function tambahChat(teks, pengirim, sumber = null, isRedFlag = false) {
+        const container = document.getElementById('chat-container');
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble chat-${pengirim}`;
+        
+        if (isRedFlag) bubble.classList.add('red-flag');
+
+        let html = `<div>${teks}</div>`;
+        
+        if (sumber) {
+            html += `<div class="chat-sources">${sumber}</div>`;
+        }
+
+        if (pengirim === 'bot') {
+            html += `
+                <button class="btn-tts" onclick="bacakanTeks(this)">
+                    <span class="material-icons">volume_up</span> Bacakan Jawaban
+                </button>
+            `;
+        }
+
+        bubble.innerHTML = html;
+        container.appendChild(bubble);
+        container.scrollTop = container.scrollHeight;
+
+        // Auto TTS jika settingan aktif
+        if (pengirim === 'bot' && document.getElementById('toggle-tts').checked) {
+            speak(teks);
+        }
+    }
+
+    // --- 4. TEXT-TO-SPEECH (TTS) ---
+    function bacakanTeks(btn) {
+        // Mengambil teks dari bubble chat sebelumnya
+        const textToSpeak = btn.parentElement.querySelector('div').innerText;
+        speak(textToSpeak);
+    }
+
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            // Hentikan suara sebelumnya jika ada
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'id-ID'; // Bahasa Indonesia
+            utterance.rate = 0.9; // Sedikit lebih lambat agar jelas untuk lansia
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Browser Anda tidak mendukung fitur suara.");
+        }
+    }
+
+    // --- 5. DETEKSI STATUS OFFLINE ---
+    function updateOnlineStatus() {
+        const badge = document.getElementById('offline-badge');
+        if (navigator.onLine) {
+            badge.style.display = 'none';
+        } else {
+            badge.style.display = 'block';
+        }
+    }
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    // --- INITIALIZATION ---
+    renderGrid();
+    updateOnlineStatus();
+</script>
+
+</body>
+</html>
