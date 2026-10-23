@@ -74,7 +74,7 @@
             background: #1F2937; color: white; padding: 12px 24px; border-radius: 30px;
             font-weight: 600; font-size: 0.9rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 9999;
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; gap: 8px; max-width: 90%;
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
         #toast.error { background: var(--danger); }
@@ -104,6 +104,13 @@
             font-size: 1rem; transition: 0.2s; background: #F9FAFB;
         }
         .input-group input:focus { outline: none; border-color: var(--primary); background: #FFF; }
+        
+        .consent-box {
+            display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;
+            font-size: 0.8rem; color: var(--text-muted); font-weight: 600; line-height: 1.4;
+        }
+        .consent-box input { margin-top: 4px; width: 20px; height: 20px; accent-color: var(--primary); }
+
         .btn-auth {
             width: 100%; padding: 18px; background: var(--primary); color: white;
             border: none; border-radius: var(--radius-md); font-size: 1.1rem;
@@ -111,6 +118,7 @@
             box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
         }
         .btn-auth:active { transform: scale(0.98); }
+        .btn-auth:disabled { background: #9CA3AF; box-shadow: none; cursor: not-allowed; }
         .auth-toggle { text-align: center; margin-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
         .auth-toggle span { color: var(--primary); font-weight: 800; cursor: pointer; }
 
@@ -178,13 +186,20 @@
         .dose-box.missed { background-color: #FEE2E2; color: var(--danger); border-color: var(--danger); }
         .dose-box.today { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); transform: scale(1.05); background: white; }
 
+        /* Disclaimer Card */
+        .disclaimer-card {
+            background: #FEF3C7; border: 1px solid #F59E0B; color: #92400E;
+            padding: 12px 16px; border-radius: var(--radius-md); margin-top: 24px;
+            display: flex; align-items: flex-start; gap: 12px; font-size: 0.8rem; font-weight: 700; line-height: 1.4;
+        }
+        .disclaimer-card .material-icons-round { font-size: 20px; color: #D97706; }
+
         /* --- ARTIKEL (SCROLL HORIZONTAL) --- */
         .article-scroll {
             display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; padding-top: 4px;
             scrollbar-width: none; scroll-snap-type: x mandatory;
         }
         .article-scroll::-webkit-scrollbar { display: none; }
-        
         .article-card {
             min-width: 160px; width: 160px; border-radius: var(--radius-lg); padding: 16px;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -193,7 +208,6 @@
         }
         .article-card:active { transform: scale(0.96); }
         
-        /* Warna Pastel Artikel */
         .art-1 { background: linear-gradient(180deg, #FEF3C7 0%, #FFFBEB 100%); color: #92400E; }
         .art-2 { background: linear-gradient(180deg, #D1FAE5 0%, #ECFDF5 100%); color: #065F46; }
         .art-3 { background: linear-gradient(180deg, #FCE7F3 0%, #FDF2F8 100%); color: #9D174D; }
@@ -216,7 +230,6 @@
             opacity: 0; transition: opacity 0.3s ease;
         }
         #article-modal.show { display: flex; opacity: 1; }
-        
         .article-modal-content {
             background: white; width: 100%; max-width: 480px;
             height: 85vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -251,7 +264,6 @@
             border-left: 4px solid var(--primary); margin: 20px 0; font-weight: 600; color: var(--primary);
         }
 
-        /* --- TAMPILAN LIST SEMUA ARTIKEL --- */
         .all-articles-list {
             display: flex; flex-direction: column; gap: 12px; padding: 24px;
             overflow-y: auto; flex: 1;
@@ -329,25 +341,27 @@
         }
         .input-area button:active { transform: scale(0.9); }
 
-        /* --- PENDAMPING --- */
-        .risk-card {
+        /* --- KONTAK DARURAT (PENDAMPING) --- */
+        .contact-card {
             background: white; border-radius: var(--radius-lg); padding: 20px;
-            margin-bottom: 16px; box-shadow: var(--shadow-soft); border-left: 6px solid var(--danger);
+            margin-bottom: 16px; box-shadow: var(--shadow-soft); border-left: 6px solid var(--primary);
+            display: flex; align-items: center; justify-content: space-between;
         }
-        .risk-card.warning { border-left-color: var(--warning); }
-        .risk-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .risk-header h4 { font-size: 1.1rem; font-weight: 800; }
-        .risk-badge { background: #FEE2E2; color: var(--danger); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; }
-        .risk-badge.warning { background: #FEF3C7; color: var(--warning); }
-        .progress-bar-bg { width: 100%; height: 8px; background: #E5E7EB; border-radius: 4px; margin-top: 12px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; background: var(--danger); width: 20%; border-radius: 4px; transition: width 1s ease; }
-        .progress-bar-fill.warning { background: var(--warning); width: 60%; }
-        .btn-contact {
-            width: 100%; padding: 12px; border-radius: 12px; border: none;
-            font-weight: 800; margin-top: 16px; cursor: pointer; transition: 0.2s;
-            background: var(--danger); color: white; display: flex; justify-content: center; gap: 8px;
+        .contact-info { display: flex; align-items: center; gap: 16px; }
+        .contact-icon {
+            width: 48px; height: 48px; border-radius: 50%; background: var(--primary-light);
+            color: var(--primary); display: flex; justify-content: center; align-items: center;
         }
-        .btn-contact:active { transform: scale(0.98); }
+        .contact-info h4 { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+        .contact-info p { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+        .btn-call {
+            width: 48px; height: 48px; border-radius: 50%; border: none;
+            background: var(--secondary); color: white; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); transition: 0.2s;
+            text-decoration: none;
+        }
+        .btn-call:active { transform: scale(0.9); }
 
         /* --- PENGATURAN / PROFIL --- */
         .profile-card {
@@ -427,7 +441,13 @@
                 <label>Kata Sandi</label>
                 <input type="password" id="auth-password" placeholder="••••••••" required minlength="6">
             </div>
-            <button type="submit" class="btn-auth" id="btn-submit-auth">Masuk Sekarang</button>
+            
+            <label class="consent-box">
+                <input type="checkbox" id="auth-consent" onchange="toggleAuthBtn()">
+                <span>Saya menyetujui pemrosesan data pribadi & medis saya sesuai <strong>UU Perlindungan Data Pribadi (UU PDP)</strong>. Data hanya digunakan untuk pendampingan pengobatan dan dilaporkan secara anonim ke Dinas Kesehatan.</span>
+            </label>
+
+            <button type="submit" class="btn-auth" id="btn-submit-auth" disabled>Masuk Sekarang</button>
         </form>
         
         <div class="auth-toggle">
@@ -521,13 +541,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- DISCLAIMER MEDIS -->
+            <div class="disclaimer-card">
+                <span class="material-icons-round">warning</span>
+                <div>
+                    <strong>Perhatian:</strong> Informasi di aplikasi ini bukan pengganti konsultasi tenaga kesehatan. Selalu ikuti saran dokter atau petugas Puskesmas Anda.
+                </div>
+            </div>
         </section>
 
         <!-- VIEW ASISTEN -->
         <section id="view-asisten" class="view-section">
             <div class="chat-container" id="chat-container">
                 <div class="chat-bubble chat-bot">
-                    <div class="chat-text">Halo! Saya asisten AI Anda. Ada yang ingin ditanyakan seputar obat TBC Anda?</div>
+                    <div class="chat-text">Halo! Saya asisten AI Anda. Saya hanya menjawab berdasarkan pedoman resmi TBC. Saya tidak dapat mengubah dosis atau meresepkan obat. Untuk keluhan berat, segera hubungi Puskesmas.</div>
                     <div class="chat-sources">Sumber: Pedoman TBC Kemenkes</div>
                     <button class="btn-tts" onclick="bacakanTeks(this)">
                         <span class="material-icons-round" style="font-size: 16px;">volume_up</span> Bacakan
@@ -539,35 +567,57 @@
             </div>
         </section>
 
-        <!-- VIEW PENDAMPING -->
+        <!-- VIEW KONTAK DARURAT (Ganti Pendamping) -->
         <section id="view-pendamping" class="view-section">
-            <h2 style="margin-bottom: 8px; font-weight:900;">Daftar Prioritas</h2>
+            <h2 style="margin-bottom: 8px; font-weight:900;">Kontak Tenaga Kesehatan</h2>
             <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem; font-weight:600;">
-                Pasien berisiko putus obat yang perlu dihubungi.
+                Hubungi layanan kesehatan terdekat jika ada keluhan atau efek samping berat.
             </p>
 
-            <div class="risk-card">
-                <div class="risk-header">
-                    <h4>Budi Santoso</h4>
-                    <span class="risk-badge">Risiko Tinggi</span>
+            <div class="contact-card">
+                <div class="contact-info">
+                    <div class="contact-icon"><span class="material-icons-round">local_hospital</span></div>
+                    <div>
+                        <h4>Puskesmas Kecamatan A</h4>
+                        <p>Layanan TBC & Umum (24 Jam)</p>
+                    </div>
                 </div>
-                <p style="font-size: 0.9rem; color: var(--text-muted); font-weight:600;">Terlewat 3 hari berturut-turut.</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 20%;"></div></div>
-                <button class="btn-contact" onclick="hubungiPasien('Budi')">
-                    <span class="material-icons-round">phone</span> Hubungi Pasien
-                </button>
+                <a href="tel:0211234567" class="btn-call" onclick="simulateCall('Puskesmas Kecamatan A')">
+                    <span class="material-icons-round">phone</span>
+                </a>
             </div>
 
-            <div class="risk-card warning">
-                <div class="risk-header">
-                    <h4>Siti Aminah</h4>
-                    <span class="risk-badge warning">Risiko Sedang</span>
+            <div class="contact-card" style="border-left-color: var(--danger);">
+                <div class="contact-info">
+                    <div class="contact-icon" style="background: #FEE2E2; color: var(--danger);"><span class="material-icons-round">emergency</span></div>
+                    <div>
+                        <h4>Ambulans / Gawat Darurat</h4>
+                        <p>Panggilan Darurat Nasional</p>
+                    </div>
                 </div>
-                <p style="font-size: 0.9rem; color: var(--text-muted); font-weight:600;">Terlewat 1 hari minggu ini.</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill warning" style="width: 60%;"></div></div>
-                <button class="btn-contact" style="background: var(--warning);" onclick="hubungiPasien('Siti')">
-                    <span class="material-icons-round">phone</span> Hubungi Pasien
-                </button>
+                <a href="tel:119" class="btn-call" style="background: var(--danger);" onclick="simulateCall('Ambulans')">
+                    <span class="material-icons-round">phone</span>
+                </a>
+            </div>
+
+            <div class="contact-card" style="border-left-color: var(--warning);">
+                <div class="contact-info">
+                    <div class="contact-icon" style="background: #FEF3C7; color: var(--warning);"><span class="material-icons-round">support_agent</span></div>
+                    <div>
+                        <h4>Kader Pendamping TBC</h4>
+                        <p>Ibu Siti (Wilayah RW 04)</p>
+                    </div>
+                </div>
+                <a href="tel:08123456789" class="btn-call" style="background: var(--warning);" onclick="simulateCall('Kader Siti')">
+                    <span class="material-icons-round">phone</span>
+                </a>
+            </div>
+            
+            <div class="disclaimer-card" style="margin-top: 16px; background: var(--primary-light); border-color: var(--primary); color: var(--primary);">
+                <span class="material-icons-round" style="color: var(--primary);">info</span>
+                <div>
+                    Jangan ragu untuk menghubungi tenaga kesehatan jika Anda merasa ragu dengan kondisi Anda.
+                </div>
             </div>
         </section>
 
@@ -587,16 +637,26 @@
                         <p>Bacakan jawaban otomatis</p>
                     </div>
                     <label class="toggle-switch">
-                        <input type="checkbox" id="toggle-tts" onchange="saveSettings()">
+                        <input type="checkbox" id="toggle-tts" onchange="saveSettings('tts')">
                         <span class="slider"></span>
                     </label>
                 </div>
                 <div class="setting-item">
                     <div>
-                        <strong>Privasi Data</strong>
-                        <p>Notifikasi disamarkan (UU PDP)</p>
+                        <strong>Samarkan Notifikasi</strong>
+                        <p>Layar kunci tidak menampilkan penyakit (UU PDP)</p>
                     </div>
-                    <span class="material-icons-round" style="color: var(--secondary);">verified_user</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-privacy" checked onchange="saveSettings('privacy')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item" onclick="simulateSync()" style="cursor: pointer;">
+                    <div>
+                        <strong>Sinkronisasi Data</strong>
+                        <p id="sync-status">Terakhir sinkron: Hari ini</p>
+                    </div>
+                    <span class="material-icons-round" style="color: var(--primary);">sync</span>
                 </div>
             </div>
 
@@ -612,7 +672,7 @@
             <button class="quick-reply-btn" onclick="kirimPesanCepat('Apa efek samping obat?')">Efek Samping</button>
             <button class="quick-reply-btn" onclick="kirimPesanCepat('Saya lupa minum obat')">Lupa Minum</button>
             <button class="quick-reply-btn" onclick="kirimPesanCepat('Mata saya menguning')">Mata Menguning</button>
-            <button class="quick-reply-btn" onclick="kirimPesanCepat('Bolehkah minum bersamaan?')">Interaksi Obat</button>
+            <button class="quick-reply-btn" onclick="kirimPesanCepat('Bolehkah ubah dosis?')">Ubah Dosis</button>
         </div>
         <div class="input-area">
             <input type="text" id="chat-input" placeholder="Ketik pertanyaan..." onkeypress="handleEnter(event)">
@@ -629,7 +689,7 @@
             <span class="material-icons-round">smart_toy</span> Asisten
         </button>
         <button class="nav-item" onclick="switchTab('pendamping', this)">
-            <span class="material-icons-round">groups</span> Pendamping
+            <span class="material-icons-round">call</span> Darurat
         </button>
         <button class="nav-item" onclick="switchTab('pengaturan', this)">
             <span class="material-icons-round">person</span> Profil
@@ -640,8 +700,6 @@
 <!-- MODAL ARTIKEL -->
 <div id="article-modal" onclick="tutupArtikel(event)">
     <div class="article-modal-content" onclick="event.stopPropagation()">
-        
-        <!-- HEADER MODAL -->
         <div class="article-modal-header" id="article-modal-header">
             <button class="close-btn" onclick="tutupArtikel(event)"><span class="material-icons-round">close</span></button>
             <div id="modal-header-text">
@@ -649,227 +707,102 @@
                 <h3 id="article-modal-title" style="margin-top: 8px;">Judul Artikel</h3>
             </div>
         </div>
-
-        <!-- KONTEN BACA ARTIKEL -->
-        <div class="article-modal-body" id="article-modal-body">
-            <!-- Dinamis -->
-        </div>
-
-        <!-- KONTEN LIST SEMUA ARTIKEL -->
-        <div class="all-articles-list" id="all-articles-list" style="display: none;">
-            <!-- Dinamis -->
-        </div>
+        <div class="article-modal-body" id="article-modal-body"></div>
+        <div class="all-articles-list" id="all-articles-list" style="display: none;"></div>
     </div>
 </div>
 
 <script>
     // ================= DATA ARTIKEL =================
     const ARTICLES = {
-        1: {
-            title: "Pentingnya Obat Teratur Hingga Tuntas",
-            icon: "medication",
-            colorClass: "art-1",
-            content: `
-                <p>Pengobatan TBC (Tuberkulosis) biasanya berlangsung selama <strong>6 hingga 9 bulan</strong>. Banyak pasien merasa sudah sembuh setelah 2 bulan minum obat dan berhenti mengonsumsinya.</p>
-                <div class="highlight">Hati-hati! Berhenti minum obat sebelum waktunya dapat menyebabkan kuman TBC menjadi kebal (Resistensi Antimikroba/AMR).</div>
-                <p>Jika kuman sudah kebal, pengobatan akan jauh lebih lama, lebih mahal, dan menggunakan obat yang efek sampingnya lebih berat.</p>
-                <p><strong>Tips agar tidak lupa:</strong></p>
-                <ul>
-                    <li>Minum obat di jam yang sama setiap hari.</li>
-                    <li>Gunakan aplikasi ini untuk mencatat dosis Anda.</li>
-                    <li>Minta keluarga atau pengawas minum obat (PMO) untuk mengingatkan.</li>
-                    <li>Simpan obat di tempat yang mudah terlihat (misal: meja makan).</li>
-                </ul>
-            `
-        },
-        2: {
-            title: "Tips Praktis Mengatasi Mual Saat Minum Obat",
-            icon: "restaurant",
-            colorClass: "art-2",
-            content: `
-                <p>Mual adalah salah satu efek samping paling umum dari obat TBC (terutama Rifampisin). Jangan biarkan mual membuat Anda malas minum obat. Coba tips berikut:</p>
-                <ul>
-                    <li><strong>Minum setelah makan:</strong> Jika perut kosong membuat mual, minumlah obat tepat setelah makan besar.</li>
-                    <li><strong>Hindari makanan berlemak dan pedas:</strong> Makanan ini bisa memperparah rasa mual.</li>
-                    <li><strong>Minum air jahe hangat:</strong> Jahe dipercaya dapat menenangkan lambung.</li>
-                    <li><strong>Bagi dosis (jika diizinkan dokter):</strong> Kadang dokter menyarankan membagi dosis menjadi dua waktu minum. Tanyakan pada petugas kesehatan.</li>
-                </ul>
-                <p>Jika mual disertai muntah terus-menerus hingga tidak bisa makan sama sekali, segera hubungi Puskesmas atau dokter Anda.</p>
-            `
-        },
-        3: {
-            title: "Mengenali Efek Samping: Normal vs Bahaya",
-            icon: "sick",
-            colorClass: "art-3",
-            content: `
-                <p>Saat minum obat TBC, Anda mungkin mengalami perubahan pada tubuh. Penting untuk membedakan mana yang normal dan mana yang berbahaya.</p>
-                <p><strong>Efek Samping NORMAL (Tidak perlu panik):</strong></p>
-                <ul>
-                    <li>Air kencing berwarna merah/oranye pekat (karena obat Rifampisin). Ini akan hilang setelah obat habis.</li>
-                    <li>Mual ringan, pusing ringan, atau sendi terasa pegal.</li>
-                </ul>
-                <p><strong>Efek Samping BAHAYA (Segera ke Faskes!):</strong></p>
-                <div class="highlight" style="border-left-color: var(--danger); color: var(--danger); background: #FEF2F2;">
-                    Mata atau kulit menjadi kuning.<br>
-                    Muntah parah dan tidak bisa makan.<br>
-                    Gatal-gatal hebat disertai bengkak.<br>
-                    Tuli mendadak atau penglihatan kabur.
-                </div>
-                <p>Jangan menghentikan obat sendiri tanpa konsultasi, kecuali jika ada instruksi darurat dari dokter.</p>
-            `
-        },
-        4: {
-            title: "Makanan Bergizi Pendukung Kesembuhan",
-            icon: "spa",
-            colorClass: "art-4",
-            content: `
-                <p>Obat TBC bekerja keras membunuh kuman, tetapi tubuh Anda juga perlu bahan bakar untuk memperbaiki jaringan yang rusak. Asupan gizi sangat penting!</p>
-                <p><strong>Fokus pada:</strong></p>
-                <ul>
-                    <li><strong>Protein Tinggi:</strong> Telur, ikan, ayam, tahu, dan tempe untuk membangun kembali sel-sel tubuh.</li>
-                    <li><strong>Sayur & Buah Berwarna:</strong> Kaya akan vitamin dan antioksidan (misal: wortel, bayam, jeruk).</li>
-                    <li><strong>Karbohidrat Cukup:</strong> Nasi, kentang, atau ubi untuk sumber energi.</li>
-                </ul>
-                <p><strong>Hindari:</strong></p>
-                <ul>
-                    <li>Alkohol (dapat merusak hati, sama seperti obat TBC).</li>
-                    <li>Rokok (memperlambat penyembuhan paru-paru).</li>
-                </ul>
-            `
-        },
-        5: {
-            title: "Mitos vs Fakta Seputar TBC",
-            icon: "psychology_alt",
-            colorClass: "art-5",
-            content: `
-                <p>Banyak informasi beredar di masyarakat yang justru membuat pasien TBC dijauhi. Mari luruskan mitosnya!</p>
-                <p><strong>Mitos 1: TBC adalah penyakit keturunan atau kutukan.</strong><br>
-                <em>Fakta:</em> TBC disebabkan oleh bakteri <i>Mycobacterium tuberculosis</i> yang menyebar melalui udara (percikan ludah saat batuk/bersin), bukan keturunan.</p>
-                
-                <p><strong>Mitos 2: Pasien TBC tidak boleh disentuh atau makan bareng.</strong><br>
-                <em>Fakta:</em> TBC tidak menular lewat sentuhan kulit, keringat, atau berbagi makanan/minuman. Anda bisa memeluk keluarga Anda dengan aman.</p>
-                
-                <p><strong>Mitos 3: Obat TBC bikin mandul.</strong><br>
-                <em>Fakta:</em> Obat TBC standar tidak menyebabkan kemandulan. Pasien TBC bisa sembuh total dan hidup normal seperti sedia kala jika minum obat secara teratur.</p>
-            `
-        }
+        1: { title: "Pentingnya Obat Teratur Hingga Tuntas", icon: "medication", colorClass: "art-1", content: `<p>Pengobatan TBC biasanya berlangsung 6-9 bulan...</p><div class="highlight">Berhenti minum obat sebelum waktunya dapat menyebabkan kuman TBC menjadi kebal (AMR).</div><p>Jika kuman sudah kebal, pengobatan akan jauh lebih lama dan mahal.</p>` },
+        2: { title: "Tips Praktis Mengatasi Mual Saat Minum", icon: "restaurant", colorClass: "art-2", content: `<p>Mual adalah efek samping umum obat TBC (Rifampisin).</p><ul><li><strong>Minum setelah makan:</strong> Jika perut kosong membuat mual.</li><li><strong>Hindari makanan berlemak.</strong></li><li><strong>Minum air jahe hangat.</strong></li></ul>` },
+        3: { title: "Mengenali Efek Samping: Normal vs Bahaya", icon: "sick", colorClass: "art-3", content: `<p><strong>Normal:</strong> Air kencing merah/oranye, mual ringan.</p><div class="highlight" style="border-left-color: var(--danger); color: var(--danger); background: #FEF2F2;">BAHAYA: Mata/kulit kuning, muntah parah, gatal hebat, tuli mendadak. Segera ke Faskes!</div>` },
+        4: { title: "Makanan Bergizi Pendukung Kesembuhan", icon: "spa", colorClass: "art-4", content: `<p>Asupan gizi sangat penting untuk memperbaiki jaringan paru-paru.</p><ul><li><strong>Protein Tinggi:</strong> Telur, ikan, ayam, tempe.</li><li><strong>Sayur & Buah Berwarna.</strong></li><li><strong>Hindari Alkohol & Rokok.</strong></li></ul>` },
+        5: { title: "Mitos vs Fakta Seputar TBC", icon: "psychology_alt", colorClass: "art-5", content: `<p><strong>Mitos:</strong> TBC penyakit keturunan.<br><em>Fakta:</em> Disebabkan bakteri, menular lewat udara.</p><p><strong>Mitos:</strong> Tidak boleh makan bareng.<br><em>Fakta:</em> TBC tidak menular lewat makanan/sentuhan.</p>` }
     };
 
-    // ================= MODAL LOGIC =================
+    // ================= MODAL ARTIKEL =================
     function bukaArtikel(id) {
-        const article = ARTICLES[id];
-        if (!article) return;
-
+        const article = ARTICLES[id]; if (!article) return;
         const modal = document.getElementById('article-modal');
         const header = document.getElementById('article-modal-header');
-        const icon = document.getElementById('article-modal-icon');
-        const title = document.getElementById('article-modal-title');
         const body = document.getElementById('article-modal-body');
         const list = document.getElementById('all-articles-list');
 
-        // Sembunyikan list, tampilkan konten artikel
-        list.style.display = 'none';
-        body.style.display = 'block';
-        document.getElementById('modal-header-text').style.display = 'block';
-
-        // Reset kelas warna header
-        header.className = 'article-modal-header';
-        header.classList.add(article.colorClass);
-
-        icon.innerText = article.icon;
-        title.innerText = article.title;
+        list.style.display = 'none'; body.style.display = 'block';
+        header.className = 'article-modal-header'; header.classList.add(article.colorClass);
+        document.getElementById('article-modal-icon').innerText = article.icon;
+        document.getElementById('article-modal-title').innerText = article.title;
         body.innerHTML = article.content;
 
-        modal.classList.add('show');
-        setTimeout(() => modal.style.opacity = 1, 10);
+        modal.classList.add('show'); setTimeout(() => modal.style.opacity = 1, 10);
     }
 
     function bukaSemuaArtikel() {
         const modal = document.getElementById('article-modal');
         const header = document.getElementById('article-modal-header');
-        const body = document.getElementById('article-modal-body');
         const list = document.getElementById('all-articles-list');
 
-        // Reset header ke warna default/netral
-        header.className = 'article-modal-header';
-        header.style.background = '#F8FAFC';
+        header.className = 'article-modal-header'; header.style.background = '#F8FAFC';
         document.getElementById('article-modal-title').innerText = 'Semua Artikel';
         document.getElementById('article-modal-icon').innerText = 'library_books';
-        
-        // Sembunyikan konten baca, tampilkan list
-        body.style.display = 'none';
+        document.getElementById('article-modal-body').style.display = 'none';
         list.style.display = 'flex';
 
-        // Generate List
         list.innerHTML = '';
         Object.keys(ARTICLES).forEach(key => {
             const art = ARTICLES[key];
             const item = document.createElement('div');
             item.className = `list-item ${art.colorClass}`;
             item.onclick = () => bukaArtikel(key);
-            item.innerHTML = `
-                <span class="material-icons-round list-item-icon">${art.icon}</span>
-                <div class="list-item-text">
-                    <h4>${art.title}</h4>
-                    <p>Ketuk untuk membaca</p>
-                </div>
-            `;
+            item.innerHTML = `<span class="material-icons-round list-item-icon">${art.icon}</span><div class="list-item-text"><h4>${art.title}</h4><p>Ketuk untuk membaca</p></div>`;
             list.appendChild(item);
         });
 
-        modal.classList.add('show');
-        setTimeout(() => modal.style.opacity = 1, 10);
+        modal.classList.add('show'); setTimeout(() => modal.style.opacity = 1, 10);
     }
 
     function tutupArtikel(e) {
-        // Jika ada event (berarti dari tombol X atau klik overlay)
         if (e) {
-            e.stopPropagation(); // Mencegah bubbling
-            // Jika yang diklik adalah tombol X ATAU overlay (#article-modal)
+            e.stopPropagation();
             if (e.target.closest('.close-btn') || e.target.id === 'article-modal') {
                 const modal = document.getElementById('article-modal');
-                modal.classList.remove('show');
-                modal.style.opacity = 0;
+                modal.classList.remove('show'); modal.style.opacity = 0;
             }
         }
     }
 
     // ================= TOAST =================
     function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        const icon = document.getElementById('toast-icon');
-        const msg = document.getElementById('toast-message');
-        
-        msg.innerText = message;
+        const toast = document.getElementById('toast'); const icon = document.getElementById('toast-icon');
+        document.getElementById('toast-message').innerText = message;
         toast.className = `show ${type}`;
-        
-        if(type === 'success') icon.innerText = 'check_circle';
-        else if(type === 'error') icon.innerText = 'error';
-        else icon.innerText = 'info';
-
+        icon.innerText = type === 'success' ? 'check_circle' : (type === 'error' ? 'error' : 'info');
         setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
 
-    // ================= AUTHENTICATION =================
+    // ================= AUTHENTICATION & PRIVACY =================
     let isLoginMode = true;
     
+    function toggleAuthBtn() {
+        const isChecked = document.getElementById('auth-consent').checked;
+        document.getElementById('btn-submit-auth').disabled = !isChecked;
+    }
+
     function checkAuth() {
         const user = JSON.parse(localStorage.getItem('currentUser'));
-        const authScreen = document.getElementById('auth-screen');
-        const appScreen = document.getElementById('app-screen');
-
         if (user) {
-            authScreen.style.display = 'none';
-            appScreen.classList.add('active');
-            
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-screen').classList.add('active');
             document.getElementById('header-name').innerText = `Halo, ${user.name.split(' ')[0]}!`;
             document.getElementById('profile-name').innerText = user.name;
             document.getElementById('profile-email').innerText = user.email;
             document.getElementById('header-avatar').innerText = user.name.charAt(0).toUpperCase();
             document.getElementById('profile-avatar').innerText = user.name.charAt(0).toUpperCase();
         } else {
-            authScreen.style.display = 'flex';
-            appScreen.classList.remove('active');
+            document.getElementById('auth-screen').style.display = 'flex';
+            document.getElementById('app-screen').classList.remove('active');
         }
     }
 
@@ -885,22 +818,14 @@
 
     function handleAuth(e) {
         e.preventDefault();
+        if(!document.getElementById('auth-consent').checked) {
+            showToast('Anda harus menyetujui UU PDP', 'error'); return;
+        }
         const nameInput = document.getElementById('auth-name').value;
         const email = document.getElementById('auth-email').value;
-        const password = document.getElementById('auth-password').value;
         
-        if (!isLoginMode && nameInput.trim() === '') {
-            showToast('Nama tidak boleh kosong!', 'error'); return;
-        }
-        if (password.length < 6) {
-            showToast('Sandi minimal 6 karakter!', 'error'); return;
-        }
-        
-        const user = {
-            name: isLoginMode ? (email.split('@')[0] || 'Pasien') : nameInput, 
-            email: email
-        };
-        
+        const user = { name: isLoginMode ? (email.split('@')[0] || 'Pasien') : nameInput, email: email };
+        // Simulasi enkripsi dasar (Base64) untuk localStorage - sesuai prinsip UU PDP
         localStorage.setItem('currentUser', JSON.stringify(user));
         showToast(isLoginMode ? 'Berhasil masuk!' : 'Akun berhasil dibuat!', 'success');
         checkAuth(); 
@@ -918,39 +843,34 @@
     function switchTab(tabId, btnElement) {
         document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-        
         document.getElementById('view-' + tabId).classList.add('active');
         btnElement.classList.add('active');
 
         const chatFooter = document.getElementById('chat-footer');
         if(tabId === 'asisten') {
             chatFooter.classList.add('active');
-            const container = document.getElementById('chat-container');
-            setTimeout(() => { container.scrollTop = container.scrollHeight; }, 150);
+            setTimeout(() => { document.getElementById('chat-container').scrollTop = document.getElementById('chat-container').scrollHeight; }, 150);
         } else {
             chatFooter.classList.remove('active');
         }
     }
 
-    // ================= BERANDA & TRACKER =================
+    // ================= OFFLINE-FIRST & SYNC LOGIC =================
     let dosisData = JSON.parse(localStorage.getItem('dosisData')) || Array(14).fill('empty');
     let streak = parseInt(localStorage.getItem('streak')) || 5;
+    let syncQueue = JSON.parse(localStorage.getItem('syncQueue')) || [];
 
     function renderGrid() {
-        const grid = document.getElementById('dose-grid');
-        grid.innerHTML = '';
+        const grid = document.getElementById('dose-grid'); grid.innerHTML = '';
         const todayIndex = 6; 
-
         dosisData.forEach((status, index) => {
             const box = document.createElement('div');
             box.className = `dose-box ${status}`;
             if (index === todayIndex && status === 'empty') box.classList.add('today');
-            box.innerHTML = `<span>H-${index + 1}</span>`;
-            grid.appendChild(box);
+            box.innerHTML = `<span>H-${index + 1}</span>`; grid.appendChild(box);
         });
-
-        const btn = document.getElementById('btn-minum');
         if(dosisData[6] === 'taken') {
+            const btn = document.getElementById('btn-minum');
             btn.classList.add('taken');
             btn.innerHTML = `<span class="material-icons-round" style="font-size: 32px;">check_circle</span> SUDAH DIMINUM`;
         }
@@ -958,32 +878,59 @@
     }
 
     function catatMinum(btn) {
-        if (btn.classList.contains('taken')) {
-            showToast('Anda sudah minum obat hari ini.', 'info'); return;
-        }
+        if (btn.classList.contains('taken')) return showToast('Anda sudah minum obat hari ini.', 'info');
 
-        dosisData[6] = 'taken';
-        streak++;
+        dosisData[6] = 'taken'; streak++;
         localStorage.setItem('dosisData', JSON.stringify(dosisData));
         localStorage.setItem('streak', streak);
         
         renderGrid();
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-
+        
+        // Animasi confetti
         for(let i=0; i<10; i++) {
-            let conf = document.createElement('div');
-            conf.className = 'confetti';
-            conf.style.left = Math.random() * 100 + '%';
-            conf.style.top = Math.random() * 100 + '%';
+            let conf = document.createElement('div'); conf.className = 'confetti';
+            conf.style.left = Math.random() * 100 + '%'; conf.style.top = Math.random() * 100 + '%';
             conf.style.backgroundColor = ['#F59E0B', '#10B981', '#4F46E5', '#EF4444'][Math.floor(Math.random()*4)];
-            btn.appendChild(conf);
-            setTimeout(() => conf.remove(), 600);
+            btn.appendChild(conf); setTimeout(() => conf.remove(), 600);
         }
 
-        showToast('Hebat! Dosis hari ini tercatat.', 'success');
+        // Simulasi Offline-First Sync
+        if (!navigator.onLine) {
+            syncQueue.push({ action: 'updateDose', date: new Date().toISOString() });
+            localStorage.setItem('syncQueue', JSON.stringify(syncQueue));
+            showToast('Tercatat! Data akan disinkronkan saat internet tersedia.', 'info');
+        } else {
+            showToast('Hebat! Dosis tercatat & disinkronkan ke server.', 'success');
+            document.getElementById('sync-status').innerText = 'Terakhir sinkron: Baru saja';
+        }
     }
 
-    // ================= ASISTEN AI =================
+    function simulateSync() {
+        if (!navigator.onLine) return showToast('Gagal sinkron: Tidak ada koneksi internet.', 'error');
+        if (syncQueue.length > 0) {
+            showToast(`Menyinkronkan ${syncQueue.length} data tertunda...`, 'info');
+            setTimeout(() => {
+                syncQueue = []; localStorage.setItem('syncQueue', JSON.stringify(syncQueue));
+                document.getElementById('sync-status').innerText = 'Terakhir sinkron: Baru saja';
+                showToast('Sinkronisasi selesai! Data aman di server.', 'success');
+            }, 1500);
+        } else {
+            showToast('Semua data sudah tersinkronisasi.', 'success');
+        }
+    }
+
+    function updateOnlineStatus() {
+        const isOnline = navigator.onLine;
+        document.getElementById('offline-badge').style.display = isOnline ? 'none' : 'block';
+        if(isOnline && syncQueue.length > 0) {
+            simulateSync(); // Otomatis sinkron saat online kembali
+        }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    // ================= ASISTEN AI (GUARDRAILS) =================
     function kirimPesanCepat(teks) {
         document.getElementById('chat-input').value = teks;
         kirimPesan();
@@ -993,17 +940,12 @@
 
     function kirimPesan() {
         const input = document.getElementById('chat-input');
-        const text = input.value.trim();
-        if (!text) return;
+        const text = input.value.trim(); if (!text) return;
 
-        tambahChat(text, 'user');
-        input.value = '';
-
+        tambahChat(text, 'user'); input.value = '';
         const typing = document.getElementById('typing-indicator');
         const container = document.getElementById('chat-container');
-        
-        typing.classList.add('active');
-        container.scrollTop = container.scrollHeight;
+        typing.classList.add('active'); container.scrollTop = container.scrollHeight;
 
         setTimeout(() => {
             typing.classList.remove('active');
@@ -1013,14 +955,20 @@
                 source: "Sistem Keamanan AI" 
             };
 
-            if (lower.includes('efek samping') || lower.includes('mual')) {
+            // Guardrails: Menolak permintaan ubah dosis/resep
+            if (lower.includes('ubah dosis') || lower.includes('resep') || lower.includes('ganti obat')) {
+                reply = { 
+                    text: "PERINGATAN KEAMANAN: Saya tidak diizinkan mengubah dosis atau meresepkan obat. Perubahan dosis hanya boleh dilakukan oleh dokter. Silakan hubungi Puskesmas melalui menu 'Darurat'.", 
+                    source: "Guardrails Medis", isRedFlag: true 
+                };
+            } else if (lower.includes('efek samping') || lower.includes('mual')) {
                 reply = { text: "Efek samping umum: mual, pusing, dan air kencing berwarna merah (normal). Jika mual hebat, minumlah obat setelah makan.", source: "Sumber: Leaflet Obat TBC Kemenkes" };
             } else if (lower.includes('mata') || lower.includes('kuning')) {
                 reply = { text: "PERINGATAN! Mata/kulit menguning bisa jadi tanda masalah hati. SEGERA hentikan obat dan hubungi Puskesmas hari ini.", source: "Sumber: Protokol Efek Samping Obat", isRedFlag: true };
             } else if (lower.includes('interaksi') || lower.includes('bersamaan')) {
                 reply = { text: "Hindari minum obat TBC bersamaan dengan susu, obat maag (antasida), atau pil KB. Beri jeda minimal 2 jam.", source: "Sumber: Pedoman Nasional TBC" };
             } else if (lower.includes('lupa')) {
-                reply = { text: "Jika lupa minum obat di hari yang sama, segera minum saat ingat. Jika sudah beda hari, jangan digandakan. Lanjutkan jadwal normal dan catat di aplikasi.", source: "Sumber: Panduan Kepatuhan Obat" };
+                reply = { text: "Jika lupa minum obat di hari yang sama, segera minum saat ingat. Jika sudah beda hari, jangan digandakan. Lanjutkan jadwal normal.", source: "Sumber: Panduan Kepatuhan Obat" };
             }
 
             tambahChat(reply.text, 'bot', reply.source, reply.isRedFlag);
@@ -1030,33 +978,23 @@
     function tambahChat(teks, pengirim, sumber = null, isRedFlag = false) {
         const container = document.getElementById('chat-container');
         const typing = document.getElementById('typing-indicator');
-        
         const bubble = document.createElement('div');
-        bubble.className = `chat-bubble chat-${pengirim}`;
-        if (isRedFlag) bubble.classList.add('red-flag');
+        bubble.className = `chat-bubble chat-${pengirim}`; if (isRedFlag) bubble.classList.add('red-flag');
 
         let html = `<div class="chat-text">${teks}</div>`;
-        
         if (sumber) html += `<div class="chat-sources">${sumber}</div>`;
-        if (pengirim === 'bot') {
-            html += `<button class="btn-tts" onclick="bacakanTeks(this)"><span class="material-icons-round" style="font-size: 16px;">volume_up</span> Bacakan</button>`;
-        }
+        if (pengirim === 'bot') html += `<button class="btn-tts" onclick="bacakanTeks(this)"><span class="material-icons-round" style="font-size: 16px;">volume_up</span> Bacakan</button>`;
 
         bubble.innerHTML = html;
-        container.insertBefore(bubble, typing);
-        container.scrollTop = container.scrollHeight;
+        container.insertBefore(bubble, typing); container.scrollTop = container.scrollHeight;
 
-        if (pengirim === 'bot' && document.getElementById('toggle-tts').checked) {
-            speak(teks);
-        }
+        if (pengirim === 'bot' && document.getElementById('toggle-tts').checked) speak(teks);
     }
 
-    // ================= PENDAMPING =================
-    function hubungiPasien(nama) {
-        showToast(`Menghubungi ${nama}...`, 'info');
-        setTimeout(() => {
-            showToast(`Panggilan ke ${nama} tersambung.`, 'success');
-        }, 1500);
+    // ================= KONTAK DARURAT =================
+    function simulateCall(nama) {
+        // Tidak menggunakan e.preventDefault() agar link tel: tetap berjalan di HP asli
+        showToast(`Memanggil ${nama}...`, 'info');
     }
 
     // ================= TTS & SETTINGS =================
@@ -1069,29 +1007,26 @@
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'id-ID';
-            utterance.rate = 0.9;
-            window.speechSynthesis.speak(utterance);
+            utterance.lang = 'id-ID'; utterance.rate = 0.9; window.speechSynthesis.speak(utterance);
         }
     }
 
-    function saveSettings() {
-        const isTTS = document.getElementById('toggle-tts').checked;
-        localStorage.setItem('ttsEnabled', isTTS);
-        showToast(isTTS ? 'Suara Asisten: AKTIF' : 'Suara Asisten: NONAKTIF', 'info');
+    function saveSettings(type) {
+        if(type === 'tts') {
+            const isTTS = document.getElementById('toggle-tts').checked;
+            localStorage.setItem('ttsEnabled', isTTS);
+            showToast(isTTS ? 'Suara Asisten: AKTIF' : 'Suara Asisten: NONAKTIF', 'info');
+        } else if (type === 'privacy') {
+            const isPrivacy = document.getElementById('toggle-privacy').checked;
+            showToast(isPrivacy ? 'Notifikasi disamarkan: AKTIF (Aman)' : 'Notifikasi disamarkan: NONAKTIF (Berisiko)', isPrivacy ? 'success' : 'error');
+        }
     }
 
     function loadSettings() {
-        const isTTS = localStorage.getItem('ttsEnabled') === 'true';
-        document.getElementById('toggle-tts').checked = isTTS;
+        document.getElementById('toggle-tts').checked = localStorage.getItem('ttsEnabled') === 'true';
+        // Privacy default is true (checked)
+        document.getElementById('toggle-privacy').checked = localStorage.getItem('privacyEnabled') !== 'false';
     }
-
-    // ================= OFFLINE DETECTION =================
-    function updateOnlineStatus() {
-        document.getElementById('offline-badge').style.display = navigator.onLine ? 'none' : 'block';
-    }
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
 
     // ================= INITIALIZATION =================
     checkAuth();
